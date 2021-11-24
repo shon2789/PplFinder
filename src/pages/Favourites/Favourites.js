@@ -2,11 +2,12 @@
 import React, { useEffect, useState } from 'react'
 import * as S from "./style";
 import Text from "components/Text";
-import FavouriteUsers from 'components/FavouriteUsers/FavouriteUsers';
+
 import { favouriteService } from 'services/favourite.service';
+import FavouriteUsers from 'components/FavouriteUsers';
 
 
-export const Favourites = () => {
+const Favourites = () => {
     const [favUsers, setFavUsers] = useState([])
 
     useEffect(() => {
@@ -17,7 +18,7 @@ export const Favourites = () => {
     const handleFavClick = (user) => {
         const favUsers = favouriteService.getFavUsers() || []
         const idx = favUsers.findIndex(currUser => currUser.login.uuid === user.login.uuid)
-        const users = idx === -1 ? favouriteService.addToFavourites(user) : favouriteService.removeFromFavourites(user.login.uuid)
+        const users = idx === -1 ? favouriteService.addToFavourites(user) : favouriteService.removeFromFavourites(user)
         setFavUsers(users)
     }
 
@@ -38,3 +39,4 @@ export const Favourites = () => {
     )
 }
 
+export default Favourites

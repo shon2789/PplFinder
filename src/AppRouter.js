@@ -3,7 +3,7 @@ import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import { Home } from "pages";
 import { ThemeProvider } from "theme";
 import NavBar from "components/NavBar";
-import { Favourites } from "pages/Favourites/Favourites";
+import { Favourites } from "pages";
 
 const AppRouter = () => {
   return (

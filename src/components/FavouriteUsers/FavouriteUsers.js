@@ -51,11 +51,7 @@ const FavouriteUsers = ({ users, handleFavClick }) => {
                         </S.User>
                     );
                 })}
-                {/* {isLoading && (
-          <S.SpinnerWrapper>
-            <Spinner color="primary" size="45px" thickness={6} variant="indeterminate" />
-          </S.SpinnerWrapper>
-        )} */}
+
             </S.List>
         </S.FavouriteUsersList>
     );

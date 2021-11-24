@@ -20,7 +20,7 @@ const ThemeProvider = ({ children }) => {
             main: "#84ffff",
           },
           error: {
-            main: "#f06292",
+            main: "#e57373",
           },
         },
       }),

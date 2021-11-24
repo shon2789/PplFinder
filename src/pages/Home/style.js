@@ -14,7 +14,7 @@ export const Content = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  padding-block-start: 100px;
+  padding-block-start: 80px;
 `;
 
 export const Header = styled.div`

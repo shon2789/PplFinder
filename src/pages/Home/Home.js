@@ -6,8 +6,9 @@ import * as S from "./style";
 import { favouriteService } from "services/favourite.service";
 
 const Home = () => {
-  const { users, isLoading, setUsers, fetchUsers } = usePeopleFetch();
+  const { users, isLoading, fetchUsers } = usePeopleFetch();
   const [userFilter, setUserFilter] = useState({ country: [] })
+  const [favUsers, setFavUsers] = useState(favouriteService.getFavUsers())
 
   useEffect(() => {
     fetchUsers(userFilter.country)
@@ -15,20 +16,25 @@ const Home = () => {
 
 
   const handleFavClick = (user) => {
-    const favUsers = favouriteService.getFavUsers() || []
     const idx = favUsers.findIndex(currUser => currUser.login.uuid === user.login.uuid)
-    idx === -1 ? favouriteService.addToFavourites(user) : favouriteService.removeFromFavourites(user.login.uuid)
+    const updatedFavUsers = idx === -1 ? favouriteService.addToFavourites(user) : favouriteService.removeFromFavourites(user)
+
+    setFavUsers(updatedFavUsers)
+  }
+
+  const fetchMoreUsers = () => {
+    fetchUsers(userFilter.country, true)
   }
 
   return (
     <S.Home>
       <S.Content>
         <S.Header>
-          <Text size="64px" bold>
+          <Text size="48px" bold>
             PplFinder
           </Text>
         </S.Header>
-        <UserList handleFavClick={handleFavClick} userFilter={userFilter} setUserFilter={setUserFilter} users={users} isLoading={isLoading} />
+        <UserList fetchMoreUsers={fetchMoreUsers} handleFavClick={handleFavClick} userFilter={userFilter} setUserFilter={setUserFilter} users={users} isLoading={isLoading} />
       </S.Content>
     </S.Home>
   );
