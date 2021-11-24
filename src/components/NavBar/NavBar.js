@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import { useHistory } from "react-router";
 
 const NavBar = () => {
   const [value, setValue] = useState(0);
+  const history = useHistory()
+  const routes = ["/", "/Favourites"];
 
   const handleChange = (_e, newValue) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    if (history.location.pathname !== routes[value]) {
+      history.push(routes[value])
+    }
+  }, [value])
 
   return (
     <AppBar position="static" color="transparent" style={{ position: "fixed", top: 0 }}>

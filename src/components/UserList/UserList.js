@@ -5,8 +5,10 @@ import CheckBox from "components/CheckBox";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import * as S from "./style";
+import { favouriteService } from "services/favourite.service";
 
-const UserList = ({ users, isLoading, setUserFilter, userFilter }) => {
+
+const UserList = ({ users, isLoading, setUserFilter, userFilter, handleFavClick }) => {
   const [hoveredUserId, setHoveredUserId] = useState();
 
   const handleMouseEnter = (index) => {
@@ -16,6 +18,17 @@ const UserList = ({ users, isLoading, setUserFilter, userFilter }) => {
   const handleMouseLeave = () => {
     setHoveredUserId();
   };
+
+  const checkFavUser = (userId, index) => {
+    const favUsers = favouriteService.getFavUsers() || []
+    const idx = favUsers.findIndex(user => user.login.uuid === userId)
+
+    if (idx !== -1 || index === hoveredUserId) {
+      return true
+    } else {
+      return false
+    }
+  }
 
 
 
@@ -49,8 +62,8 @@ const UserList = ({ users, isLoading, setUserFilter, userFilter }) => {
                   {user?.location.city} {user?.location.country}
                 </Text>
               </S.UserInfo>
-              <S.IconButtonWrapper isVisible={index === hoveredUserId}>
-                <IconButton onClick={() => { console.log('favourited') }}>
+              <S.IconButtonWrapper isVisible={checkFavUser(user.login.uuid, index)}>
+                <IconButton onClick={() => { handleFavClick(user); }}>
                   <FavoriteIcon color="error" />
                 </IconButton>
               </S.IconButtonWrapper>
